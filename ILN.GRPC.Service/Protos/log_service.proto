@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/any.proto";
+
+option csharp_namespace = "ILN.GRPC.Service";
+
+package iln_grpc_service;
+
+// Services 
+
+service _LogService {
+  rpc SayHello(_HelloPayload) returns (_LogService_HelloResponse);
+
+  rpc Log(_MessagePayload) returns (google.protobuf.Empty);
+}
+
+// Schema
+
+message _HelloPayload {
+  string application_id    = 1;
+  string machine_name      = 2;
+  string working_directory = 3;
+  string client_version    = 4;
+}
+
+message _LogService_HelloResponse {
+  bool acknowledged = 1;
+}
+
+message _MessagePayload {
+  string                      application_id   = 1;
+  int64                       time             = 2;
+  _Level                      level            = 3;
+  string                      text             = 4;
+  _ExceptionSummary           exception        = 5;
+  repeated _Field             fields           = 6;
+  google.protobuf.StringValue member_name      = 7;
+  google.protobuf.StringValue source_file_path = 8;
+  google.protobuf.UInt32Value source_file_line = 9;
+}
+
+enum _Level {
+  UNDEFINED = 0;
+  DEBUG     = 1;
+  STATISTIC = 2;
+  INFO      = 3;
+  WARNING   = 4;
+  ERROR     = 5;
+  FATAL     = 6;
+}
+
+message _ExceptionSummary {
+  string                      message    = 1;
+  google.protobuf.StringValue stacktrace = 2;
+}
+
+message _Field {
+  string                      key   = 1;
+  google.protobuf.StringValue value = 2;
+}

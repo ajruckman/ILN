@@ -1,0 +1,7 @@
+.idea/
+bin/
+obj/
+/packages/
+_published/
+riderModule.iml
+/_ReSharper.Caches/
