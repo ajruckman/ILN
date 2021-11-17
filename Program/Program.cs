@@ -2,6 +2,7 @@
 
 using ILN.API;
 using ILN.Core;
+using ILN.GRPC.MessageForwarder;
 
 ExampleObject o = new()
 {
@@ -15,23 +16,23 @@ Console.WriteLine(new Fields(o).ToString());
 
 //
 
-List<IMessageHandler> handlers = new()
+List<IMessageActor> handlers = new()
 {
-    new ConsoleMessageHandler(false, false),
-    new ReceiverServiceMessageHandler("http://localhost:5257", "ILN.Program"),
+    new MessageConsolePrinter(false, false),
+    new MessageForwarder("https://localhost:7141", "ILN.Program", true),
 };
-InfraLogger lc = new("ILN.Program", handlers);
+Logger lc = new("ILN.Program", handlers);
 
 lc.Info("test");
 
-lc.Error("test", new Exception("test"));
+await lc.ErrorAsync("test", new Exception("test"));
 
-lc.Info("test", new Fields
+await lc.InfoAsync("test", new Fields
 {
     {"Test", 1},
 });
 
-lc.Error("test", new Exception("test"), new Fields
+await lc.ErrorAsync("test", new Exception("test"), new Fields
 {
     {"Test", 1},
     {"Object", new Fields(o)},
@@ -41,20 +42,21 @@ lc.Error("test", new Exception("test"), new Fields
 
 handlers = new()
 {
-    new ConsoleMessageHandler(true),
+    new MessageConsolePrinter(true),
+    new MessageForwarder("https://localhost:7141", "ILN.Program", true),
 };
-lc = new InfraLogger("ILN.Program", handlers);
+lc = new Logger("ILN.Program", handlers);
 
-lc.Info("test");
+await lc.InfoAsync("test");
 
-lc.Error("test", new Exception("test"));
+await lc.ErrorAsync("test", new Exception("test"));
 
-lc.Info("test", new Fields
+await lc.InfoAsync("test", new Fields
 {
     {"Test", 1},
 });
 
-lc.Error("test", new Exception("test"), new Fields
+await lc.ErrorAsync("test", new Exception("test"), new Fields
 {
     {"Test", 1},
     {"Object", new Fields(o)},
@@ -64,20 +66,21 @@ lc.Error("test", new Exception("test"), new Fields
 
 handlers = new()
 {
-    new ConsoleMessageHandler(true, true),
+    new MessageConsolePrinter(true, true),
+    new MessageForwarder("https://localhost:7141", "ILN.Program", true),
 };
-lc = new InfraLogger("ILN.Program", handlers, "ILN");
+lc = new Logger("ILN.Program", handlers, "ILN");
 
-lc.Info("test");
+await lc.InfoAsync("test");
 
-lc.Error("test", new Exception("test"));
+await lc.ErrorAsync("test", new Exception("test"));
 
-lc.Info("test", new Fields
+await lc.InfoAsync("test", new Fields
 {
     {"Test", 1},
 });
 
-lc.Error("test", new Exception("test"), new Fields
+await lc.ErrorAsync("test", new Exception("test"), new Fields
 {
     {"Test", 1},
     {"Object", new Fields(o)},

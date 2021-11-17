@@ -8,6 +8,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Program", "Program\Program.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ILN.API", "ILN.API\ILN.API.csproj", "{DE18205C-3325-4D67-B1B9-2009833EB275}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ILN.GRPC.MessageForwarder", "ILN.GRPC.MessageForwarder\ILN.GRPC.MessageForwarder.csproj", "{63F8674A-C260-4C4F-AF0D-1C23ED16DF56}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ILN.GRPC.Service.Plugin.SplunkForwarder", "ILN.GRPC.Service.Plugin.SplunkForwarder\ILN.GRPC.Service.Plugin.SplunkForwarder.csproj", "{2128BE0D-2211-4D07-871F-4F857B654883}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +34,13 @@ Global
 		{DE18205C-3325-4D67-B1B9-2009833EB275}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE18205C-3325-4D67-B1B9-2009833EB275}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE18205C-3325-4D67-B1B9-2009833EB275}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63F8674A-C260-4C4F-AF0D-1C23ED16DF56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63F8674A-C260-4C4F-AF0D-1C23ED16DF56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63F8674A-C260-4C4F-AF0D-1C23ED16DF56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63F8674A-C260-4C4F-AF0D-1C23ED16DF56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2128BE0D-2211-4D07-871F-4F857B654883}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2128BE0D-2211-4D07-871F-4F857B654883}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2128BE0D-2211-4D07-871F-4F857B654883}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2128BE0D-2211-4D07-871F-4F857B654883}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

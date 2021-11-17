@@ -3,25 +3,29 @@ using ILN.API;
 
 namespace ILN.Core;
 
-public class ConsoleMessageHandler : IMessageHandler
+public partial class MessageConsolePrinter : IMessageActor
 {
     public readonly bool PrintSourceInfo;
     public readonly bool PrintStacktrace;
 
-    public ConsoleMessageHandler(bool printSourceInfo = false, bool printStacktrace = false)
+    public MessageConsolePrinter(bool printSourceInfo = true, bool printStacktrace = true)
     {
         PrintSourceInfo = printSourceInfo;
         PrintStacktrace = printStacktrace;
     }
 
-    public Task Handle(IMessage message)
+    public void Handle(IMessage message)
     {
         var formatted =
             $"{FormatLevel(message.Level)} [{message.Time:HH:mm:ss.fff}] {Format(message)}";
 
         Console.WriteLine(formatted);
         Debug.WriteLine(formatted);
+    }
 
+    public Task HandleAsync(IMessage message, CancellationToken? _)
+    {
+        Handle(message);
         return Task.CompletedTask;
     }
 
@@ -67,4 +71,19 @@ public class ConsoleMessageHandler : IMessageHandler
         Level.Fatal     => "FATL",
         _               => throw new ArgumentOutOfRangeException(nameof(level), level, null),
     };
+}
+
+public partial class MessageConsolePrinter
+{
+    public static Logger New
+    (
+        string applicationID,          string? projectRoot     = null,
+        bool   printSourceInfo = true, bool    printStacktrace = true
+    )
+    {
+        return new Logger(applicationID, new List<IMessageActor>
+        {
+            new MessageConsolePrinter(printSourceInfo, printStacktrace),
+        }, projectRoot);
+    }
 }

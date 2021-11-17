@@ -22,4 +22,9 @@
         <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\ILN.API\ILN.API.csproj" />
+      <ProjectReference Include="..\ILN.Core\ILN.Core.csproj" />
+    </ItemGroup>
+
 </Project>

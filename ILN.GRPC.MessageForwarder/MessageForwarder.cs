@@ -1,18 +1,17 @@
 using System.Collections;
 using System.Net.Security;
-using Google.Protobuf.WellKnownTypes;
 using Grpc.Net.Client;
 using ILN.API;
 using ILN.GRPC.Service;
 
-namespace ILN.Core;
+namespace ILN.GRPC.MessageForwarder;
 
-public class ReceiverServiceMessageHandler : IMessageHandler
+public class MessageForwarder : IMessageActor
 {
     private readonly GrpcChannel                   _grpcChannel;
     private readonly _LogService._LogServiceClient _grpcClient;
 
-    public ReceiverServiceMessageHandler(string address, string applicationID, bool ignoreSSL = false)
+    public MessageForwarder(string address, string applicationID, bool ignoreSSL = false)
     {
         GrpcChannelOptions options = new();
         SocketsHttpHandler handler = new()
@@ -47,7 +46,7 @@ public class ReceiverServiceMessageHandler : IMessageHandler
                 ApplicationId    = applicationID,
                 MachineName      = Environment.MachineName,
                 WorkingDirectory = Directory.GetCurrentDirectory(),
-                ClientVersion = typeof(ReceiverServiceMessageHandler).Assembly.GetName().Version?.ToString() ??
+                ClientVersion = typeof(MessageForwarder).Assembly.GetName().Version?.ToString() ??
                                 "UNKNOWN",
             });
 
@@ -64,7 +63,24 @@ public class ReceiverServiceMessageHandler : IMessageHandler
         }
     }
 
-    public async Task Handle(IMessage message)
+    public void Handle(IMessage message)
+    {
+        _MessagePayload payload = BuildMessagePayload(message);
+
+        _grpcClient.Log(payload);
+    }
+
+    public async Task HandleAsync(IMessage message, CancellationToken? cancellationToken)
+    {
+        _MessagePayload payload = BuildMessagePayload(message);
+
+        if (cancellationToken != null)
+            await _grpcClient.LogAsync(payload, cancellationToken: cancellationToken.Value);
+        else
+            await _grpcClient.LogAsync(payload);
+    }
+
+    private _MessagePayload BuildMessagePayload(IMessage message)
     {
         var payload = new _MessagePayload
         {
@@ -105,8 +121,6 @@ public class ReceiverServiceMessageHandler : IMessageHandler
             }
         }
 
-        //
-
-        Empty _ = await _grpcClient.LogAsync(payload);
+        return payload;
     }
 }
