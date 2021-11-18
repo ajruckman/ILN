@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\ILN.API\ILN.API.csproj" />
+      <ProjectReference Include="..\ILN.Core\ILN.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>

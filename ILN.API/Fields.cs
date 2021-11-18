@@ -62,6 +62,18 @@ public class Fields : OrderedDictionary
             $"[{v}: {(this[v] is Fields ? "[...]" : this[v])}]"
         ));
     }
+
+    //
+
+    public static Fields operator +(Fields l, Fields r)
+    {
+        var c = new Fields();
+
+        foreach (string key in l.Keys) c[key] = l[key];
+        foreach (string key in r.Keys) c[key] = r[key];
+
+        return c;
+    }
 }
 
 [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
