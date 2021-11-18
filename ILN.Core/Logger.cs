@@ -5,6 +5,7 @@ namespace ILN.Core;
 
 public class Logger : ILogger
 {
+    public readonly string  Host;
     public readonly string  ApplicationID;
     public readonly string? ProjectRoot;
 
@@ -12,9 +13,11 @@ public class Logger : ILogger
     (
         string              applicationID,
         List<IMessageActor> messageActors,
+        string?             host        = null,
         string?             projectRoot = null
     )
     {
+        Host           = host ?? Environment.MachineName;
         ApplicationID  = applicationID;
         _messageActors = messageActors;
         ProjectRoot    = projectRoot;
@@ -223,6 +226,7 @@ public class Logger : ILogger
 
         var message = new Message
         (
+            Host,
             ApplicationID,
             level: level,
             text: text,

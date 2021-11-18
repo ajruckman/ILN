@@ -30,15 +30,16 @@ message _LogService_HelloResponse {
 }
 
 message _MessagePayload {
-  string                      application_id   = 1;
-  int64                       time             = 2;
-  _Level                      level            = 3;
-  string                      text             = 4;
-  _ExceptionSummary           exception        = 5;
-  repeated _Field             fields           = 6;
-  google.protobuf.StringValue member_name      = 7;
-  google.protobuf.StringValue source_file_path = 8;
-  google.protobuf.UInt32Value source_file_line = 9;
+  string                      host             = 1;
+  string                      application_id   = 2;
+  int64                       time             = 3;
+  _Level                      level            = 4;
+  string                      text             = 5;
+  _ExceptionSummary           exception        = 6;
+  repeated _Field             fields           = 7;
+  google.protobuf.StringValue member_name      = 8;
+  google.protobuf.StringValue source_file_path = 9;
+  google.protobuf.UInt32Value source_file_line = 10;
 }
 
 enum _Level {

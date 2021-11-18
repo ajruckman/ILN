@@ -4,7 +4,7 @@ namespace ILN.GRPC.Service;
 
 public class ProcessorService
 {
-    private static IReadOnlyList<IMessageProcessor> _processors;
+    private static List<IMessageProcessor> _processors = null!;
 
     public async Task InvokeAllProcessors(IMessage message, CancellationToken cancellationToken)
     {
@@ -14,12 +14,12 @@ public class ProcessorService
         }
     }
 
-    public static void SetPlugins(IEnumerable<IMessageProcessor> plugins)
+    public static void SetPlugins(List<IMessageProcessor> plugins)
     {
-        _processors = plugins.ToArray();
+        _processors = plugins;
 
-        #if DEBUG
-        _processors = _processors.Append(new ConsolePrinter()).ToArray();
-        #endif
+        // #if DEBUG
+        // _processors.Add(new ConsolePrinter());
+        // #endif
     }
 }

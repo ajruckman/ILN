@@ -10,6 +10,8 @@ public class ConsolePrinter : IMessageProcessor
 {
     public string ID => "ILN.GRPC.Service.ConsolePrinter";
 
+    public void Initialize(IReadOnlyDictionary<string, object> parameters) { }
+
     public Task Process(IMessage message, CancellationToken cancellationToken)
     {
         Console.WriteLine(JsonConvert.SerializeObject(message, Formatting.Indented));

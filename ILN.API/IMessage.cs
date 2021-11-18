@@ -2,6 +2,7 @@ namespace ILN.API;
 
 public interface IMessage
 {
+    string            Host           { get; }
     string            ApplicationID  { get; }
     DateTime          Time           { get; }
     Level             Level          { get; }

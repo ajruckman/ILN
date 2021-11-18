@@ -25,6 +25,7 @@
     <ItemGroup>
       <ProjectReference Include="..\ILN.API\ILN.API.csproj" />
       <ProjectReference Include="..\ILN.Core\ILN.Core.csproj" />
+      <ProjectReference Include="..\ILN.GRPC.MessageForwarder\ILN.GRPC.MessageForwarder.csproj" />
     </ItemGroup>
 
 </Project>

@@ -33,9 +33,9 @@ namespace ILN.GRPC.Service.PluginSupport
             }
         }
 
-        public IEnumerable<T> Implementations<T>()
+        public IEnumerable<PluginType<T>> Implementations<T>() where T : class
         {
-            List<T> result = new();
+            List<PluginType<T>> result = new();
 
             foreach (Assembly loadedAssembly in _loadedAssemblies)
             {
@@ -50,25 +50,7 @@ namespace ILN.GRPC.Service.PluginSupport
                     continue;
                 }
 
-                foreach (Type type in types)
-                {
-                    try
-                    {
-                        if (type.FullName == null) continue;
-
-                        object? inst = Activator.CreateInstanceFrom(type.Module.FullyQualifiedName, type.FullName)
-                          ?.Unwrap();
-
-                        if (inst == null) continue;
-
-                        var conv = (T) inst;
-                        result.Add(conv);
-                    }
-                    catch (Exception)
-                    {
-                        // ignored
-                    }
-                }
+                result.AddRange(types.Select(type => new PluginType<T>(type)));
             }
 
             return result;

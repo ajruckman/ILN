@@ -7,13 +7,13 @@ namespace ILN.GRPC.Service.PluginSupport
     {
         private static readonly Logger Logger = MessageConsolePrinter.New("ILN.GRPC.Service", "ILN");
 
-        public static IEnumerable<T> ReadPlugins<T>(string path, Type[] sharedTypes) where T : class
+        public static IEnumerable<PluginType<T>> ReadPlugins<T>(string path, Type[] sharedTypes) where T : class
         {
-            foreach (var pluginDir in Directory.GetDirectories(path))
+            foreach (string pluginDir in Directory.GetDirectories(path))
             {
                 var context = new PluginAssemblyLoadContext(pluginDir, sharedTypes);
 
-                T[] plugins;
+                PluginType<T>[] plugins;
 
                 try
                 {
@@ -49,7 +49,7 @@ namespace ILN.GRPC.Service.PluginSupport
                     continue;
                 }
 
-                foreach (var plugin in plugins)
+                foreach (PluginType<T> plugin in plugins)
                 {
                     yield return plugin;
                 }

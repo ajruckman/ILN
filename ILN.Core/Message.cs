@@ -6,11 +6,12 @@ public class Message : IMessage
 {
     internal Message
     (
-        string  applicationID, DateTime          time,           Level   level,
-        string  text,          ExceptionSummary? exception,      Fields? fields,
-        string? memberName,    string?           sourceFilePath, uint?   sourceFileLine
+        string  host,       string            applicationID,  DateTime time, Level level,
+        string  text,       ExceptionSummary? exception,      Fields?  fields,
+        string? memberName, string?           sourceFilePath, uint?    sourceFileLine
     )
     {
+        Host           = host;
         ApplicationID  = applicationID;
         Time           = time;
         Level          = level;
@@ -22,6 +23,7 @@ public class Message : IMessage
         SourceFileLine = sourceFileLine;
     }
 
+    public string            Host          { get; }
     public string            ApplicationID { get; }
     public DateTime          Time          { get; }
     public Level             Level         { get; }

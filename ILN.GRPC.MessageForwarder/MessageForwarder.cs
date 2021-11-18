@@ -84,6 +84,7 @@ public class MessageForwarder : IMessageActor
     {
         var payload = new _MessagePayload
         {
+            Host          = message.Host,
             ApplicationId = message.ApplicationID,
             Time          = ((DateTimeOffset) message.Time).ToUnixTimeSeconds(),
             Level = message.Level switch
