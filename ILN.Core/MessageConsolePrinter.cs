@@ -17,7 +17,7 @@ public partial class MessageConsolePrinter : IMessageActor
     public void Handle(IMessage message)
     {
         var formatted =
-            $"{FormatLevel(message.Level)} [{message.Time:HH:mm:ss.fff}] {Format(message)}";
+            $"[{message.ApplicationID}] {FormatLevel(message.Level)} [{message.Time:HH:mm:ss.fff}] {Format(message)}";
 
         Console.WriteLine(formatted);
         Debug.WriteLine(formatted);
@@ -29,7 +29,7 @@ public partial class MessageConsolePrinter : IMessageActor
         return Task.CompletedTask;
     }
 
-    public string Format(IMessage m)
+    private string Format(IMessage m)
     {
         var result = "";
 
